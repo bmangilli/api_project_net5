@@ -10,6 +10,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Clientes.Models;
 using Clientes.Validators;
+using System.IO;
 
 namespace api_project_net5
 {
@@ -17,7 +18,14 @@ namespace api_project_net5
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -27,7 +35,7 @@ namespace api_project_net5
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContextPool<AppDbContext>(options =>
+            services.AddDbContextPool<ClientesDbContext>(options =>
                 options.UseNpgsql(connectionString)
             );
 

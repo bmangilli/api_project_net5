@@ -12,9 +12,9 @@ namespace Clientes.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ClientesDbContext _context;
 
-        public ClienteController(AppDbContext context)
+        public ClienteController(ClientesDbContext context)
         {
             _context = context;
         }

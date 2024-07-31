@@ -4,9 +4,9 @@ using System;
 
 namespace Clientes.Data
 {
-    public class AppDbContext : DbContext
+    public class ClientesDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public ClientesDbContext(DbContextOptions<ClientesDbContext> options) : base(options)
         {
         }
 
@@ -25,6 +25,9 @@ namespace Clientes.Data
                 .HasMaxLength(14);
 
             modelBuilder.Entity<Cliente>()
+                .HasCheckConstraint("CK_CNPJ_Length", "LENGTH(\"CNPJ\") = 14");
+
+            modelBuilder.Entity<Cliente>()
                 .Property(c => c.Endereco)
                 .IsRequired()
                 .HasMaxLength(100);
@@ -33,6 +36,9 @@ namespace Clientes.Data
                 .Property(c => c.Telefone)
                 .IsRequired()
                 .HasMaxLength(13);
+
+            modelBuilder.Entity<Cliente>()
+                .HasCheckConstraint("CK_Telefone_Length", "LENGTH(\"Telefone\") = 13");
 
             modelBuilder.Entity<Cliente>()
                 .Property(c => c.DataCadastro)
