@@ -3,17 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ApiClientes.Data;
+using Clientes.Data;
+using Clientes.Models;
 
-namespace ApiClientes.Controllers
+namespace Clientes.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class ClienteController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public ClientesController(AppDbContext context)
+        public ClienteController(AppDbContext context)
         {
             _context = context;
         }

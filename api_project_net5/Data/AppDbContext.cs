@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Clientes.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace ApiClientes.Data
+namespace Clientes.Data
 {
     public class AppDbContext : DbContext
     {
