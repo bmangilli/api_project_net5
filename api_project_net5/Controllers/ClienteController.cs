@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clientes.Data;
 using Clientes.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Clientes.Controllers
 {
@@ -21,13 +22,18 @@ namespace Clientes.Controllers
 
         // GET: api/Clientes
         [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             return await _context.Clientes.ToListAsync();
         }
 
-        // GET api/Clientes/5
+        // GET api/Clientes/{id}
         [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
@@ -42,6 +48,9 @@ namespace Clientes.Controllers
 
         // POST api/Clientes
         [HttpPost]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Cliente>> PostCliente([FromBody] Cliente cliente)
         {
             if (CnpjExists(cliente.CNPJ))
@@ -55,8 +64,12 @@ namespace Clientes.Controllers
             return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
         }
 
-        // PUT api/Clientes/5
+        // PUT api/Clientes/{id}
         [HttpPut("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutCliente(int id, [FromBody] Cliente cliente)
         {
             if (id != cliente.Id)
@@ -90,8 +103,11 @@ namespace Clientes.Controllers
             return NoContent();
         }
 
-        // DELETE api/Clientes/5
+        // DELETE api/Clientes/{id}
         [HttpDelete("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCliente(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);

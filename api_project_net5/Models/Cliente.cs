@@ -8,6 +8,10 @@ namespace Clientes.Models
     {
         public int Id { get; set; }
 
+        /// <summary>
+        /// teste smr
+        /// </summary>
+        /// <example>nome de e</example>
         [Required(ErrorMessage = "Nome é obrigatório")]
         [MaxLength(100, ErrorMessage = "Nome deve ter no máximo 100 caracteres")]
         public string Nome { get; set; }
